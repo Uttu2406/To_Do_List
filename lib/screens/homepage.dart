@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do/screens/myprofile.dart';
+import 'package:to_do/screens/navbar.dart';
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
 import '../model/todo.dart';
@@ -27,7 +27,9 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: tdBGColor,
 
-      // App Bar that apperas on top
+      drawer: Navbar(),
+
+      // App Bar that appears on top
       appBar: AppBar(
         backgroundColor: tdBGColor,
         elevation: 2,
@@ -35,29 +37,33 @@ class _HomepageState extends State<Homepage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(
-              Icons.menu,
-              color: tdBlack,
-              size: 35,
-            ),
-            InkWell(
-              child: CircleAvatar(
-                radius: 20,
-                backgroundColor: tdBlack,
-                child: CircleAvatar(
-                  radius: 19,
-                  backgroundImage: AssetImage('assets/uttu.png'),
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => profile(),
-                  ),
-                );
-              },
-            ),
+            Text("Taskify"),
+            
+
+            // Icon(
+            //   Icons.menu,
+            //   color: tdBlack,
+            //   size: 35,
+            // ),
+
+            // InkWell(
+            //   child: CircleAvatar(
+            //     radius: 20,
+            //     backgroundColor: tdBlack,
+            //     child: CircleAvatar(
+            //       radius: 19,
+            //       backgroundImage: AssetImage('assets/uttu.png'),
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => profile(),
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),
