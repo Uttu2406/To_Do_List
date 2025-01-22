@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/screens/navbar.dart';
+import 'package:to_do/utils/get_list.dart';
+import 'package:to_do/utils/save_list.dart';
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
 import '../model/todo.dart';
@@ -12,13 +14,23 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  final todosList = ToDo.todoList();
+  // final todosList = ToDo.todoList();
   List<ToDo> _foundToDo = [];
   final _todoController = TextEditingController();
 
+  loadData()async{
+    final list = await getList();
+    setState(() {
+      _foundToDo = list;
+    });
+  }
+
   @override
   void initState() {
-    _foundToDo = todosList;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadData();
+    });
+    // _foundToDo = todosList;
     super.initState();
   }
 
@@ -167,9 +179,15 @@ class _HomepageState extends State<Homepage> {
                     right: 20,
                   ),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: ()async {
                       // print("Click Detected - Add Item");
-                      _addToDoItem(_todoController.text);
+                      if(_todoController.text.isNotEmpty ){
+                        _addToDoItem(_todoController.text.trim());
+
+                      }
+                      await loadData();
+                     
+                      
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: tdBlue,
@@ -197,38 +215,31 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _deleteToDoItem(String id) {
-    setState(() {
-      todosList.removeWhere((item) => item.id == id);
-    });
+    // setState(() {
+    //   todosList.removeWhere((item) => item.id == id);
+    // });
   }
 
   void _addToDoItem(String toDo) {
     // print("ff "+toDo);
-    setState(() {
-      todosList.add(
-        ToDo(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          todoText: toDo,
-        ),
-      );
-    });
+  saveList(toDo, false);
     _todoController.clear();
   }
 
   void _runFilter(String enteredKeyword) {
-    List<ToDo> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = todosList;
-    } else {
-      results = todosList
-          .where((item) => item.todoText!
-              .toLowerCase()
-              .contains(enteredKeyword.toLowerCase()))
-          .toList();
-    }
+    // List<ToDo> results = [];
+    // if (enteredKeyword.isEmpty) {
+    //   results = todosList;
+    // } else {
+    //   results = todosList
+    //       .where((item) => item.todoText!
+    //           .toLowerCase()
+    //           .contains(enteredKeyword.toLowerCase()))
+    //       .toList();
+    // }
 
-    setState(() {
-      _foundToDo = results;
-    });
+    // setState(() {
+    //   _foundToDo = results;
+    // });
   }
 }

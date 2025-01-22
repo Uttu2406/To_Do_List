@@ -21,11 +21,18 @@ class _NavbarState extends State<Navbar> {
             decoration: BoxDecoration(
               color: tdBlue,
             ),
-            child: Text(
-              "Menu",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+            child: Expanded(
+              child: Row(
+                children: [
+                  Text(
+                    "Menu",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+
+                ],
               ),
             ),
           ),
